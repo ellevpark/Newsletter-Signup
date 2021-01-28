@@ -2,11 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser"); 
 const mailchimp = require("@mailchimp/mailchimp_marketing");
 const app = express(); 
+const config = require("config")
+
 
 const apiKey = config.API_KEY;
 const serverKey = config.SERVER_KEY;
 const listKey = config.LIST_KEY;
-
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}))
