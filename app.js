@@ -2,17 +2,13 @@ const express = require("express");
 const bodyParser = require("body-parser"); 
 const mailchimp = require("@mailchimp/mailchimp_marketing");
 const app = express(); 
-const config = require("config")
+const dotenv = require("dotenv").config()
 
-
-const apiKey = config.API_KEY;
-const serverKey = config.SERVER_KEY;
-const listKey = config.LIST_KEY;
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}))
 
-app.listen(process.env || 3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log("I am listening on port 3000")
 })
 
@@ -22,8 +18,8 @@ app.get("/", function (req, res) {
 
  //Setting up MailChimp. Here you will put your own API key and your own server key (example looks like: us9)
  mailchimp.setConfig({
-  apiKey: apiKey,
-  server: serverKey
+  apiKey: process.env.API_KEY,
+  server: process.env.SERVER_ID
  });
  //When the sign in button is pressed execute this
  app.post("/", function (req,res) {
@@ -31,14 +27,14 @@ app.get("/", function (req, res) {
  const lastName = req.body.lastName;
  const email = req.body.email;
  // Here is where you will put your own listKey 
- const listId = listKey;
+ const listId = process.env.LIST_ID;
  // Creating an object with the users data
  const subscribingUser = {
   firstName: firstName,
   lastName: lastName,
   email: email
  };
- // Uploading the data to the server
+ // Uplçading the data to the server
 
 async function run() {
  const response = await mailchimp.lists.addListMember(listId, {
